@@ -16,22 +16,7 @@ const Navbar = () => {
                 </span>
               </NavLink>
 
-              <nav className="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200">
-                <NavLink
-                  to="/"
-                  className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900"
-                >
-                  Home
-                </NavLink>
-
-                <NavLink
-                  to="/docs"
-                  className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900"
-                >
-                  Docs
-                </NavLink>
-                
-              </nav>
+             
             </div>
             <div className="inline-flex items-center ml-5 space-x-6 lg:justify-end">
             <NavLink
