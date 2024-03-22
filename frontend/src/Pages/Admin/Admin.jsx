@@ -1,8 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminCard from "../../Components/Card/AdminCard";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
+  const [placements, setPlacements] = useState([]);
+  const [companyName, setCompanyName] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [branch, setBranch] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem('user'));
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8010/api/placement/get-placements",
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.json();
+        if (data.success) {
+          setPlacements(data.placements);
+        } else {
+          console.error("Failed to fetch placements");
+        }
+      } catch (error) {
+        console.error("Error fetching placements:", error);
+      }
+    };
+    fetchData();
+  }, [token]);
+
+  
 
   const openModal = () => {
     setShowModal(true);
@@ -10,6 +48,39 @@ const Admin = () => {
 
   const closeModal = () => {
     setShowModal(false);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        "http://localhost:8010/api/placement/create-placement",
+        {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Include bearer token in the headers
+          },
+          body: JSON.stringify({
+            companyName,
+            jobTitle,
+            Date: date,
+            Branch: branch,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      if (data.success) {
+        alert(data.message);
+        window.location.reload();
+      } else {
+        alert("Placement creation failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -48,7 +119,7 @@ const Admin = () => {
                     </div>
                   </div>
 
-                  <form action="#" method="POST">
+                  <form onSubmit={handleSubmit}>
                     <br />
                     <div className="mb-4">
                       <label
@@ -59,10 +130,12 @@ const Admin = () => {
                       </label>
                       <input
                         type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Enter your name"
+                        id="companyName"
+                        name="companyName"
+                        placeholder="Enter company name"
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                        value={companyName}
+                        onChange={(e) => setCompanyName(e.target.value)}
                       />
                     </div>
                     <div className="mb-4">
@@ -77,6 +150,8 @@ const Admin = () => {
                         id="date"
                         name="date"
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
                       />
                     </div>
                     <div className="mb-4">
@@ -88,12 +163,28 @@ const Admin = () => {
                       </label>
                       <input
                         type="text"
-                        id="job_title"
-                        name="job_title"
-                        placeholder="Enter your job title"
+                        id="jobTitle"
+                        name="jobTitle"
+                        placeholder="Enter job title"
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                        value={jobTitle}
+                        onChange={(e) => setJobTitle(e.target.value)}
                       />
                     </div>
+
+                    <select
+                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                      value={branch}
+                      onChange={(e) => setBranch(e.target.value)}
+                    >
+                      <option value="" disabled>
+                        Select Branch
+                      </option>
+                      <option value="IT">IT</option>
+                      <option value="COMPS">Computer Science</option>
+                      {/* Add more options as needed */}
+                    </select>
+
                     <div>
                       <button
                         type="submit"
@@ -112,9 +203,9 @@ const Admin = () => {
       )}
 
       <div className="flex flex-wrap justify-center items-center gap-4">
-        <AdminCard />
-        <AdminCard />
-        <AdminCard />
+        {placements.map((placement) => (
+          <AdminCard key={placement._id} placement={placement} />
+        ))}
       </div>
     </div>
   );

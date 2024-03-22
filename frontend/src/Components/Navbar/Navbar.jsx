@@ -1,6 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    // Implement your logout logic here
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    navigate('/login');
+    window.location.reload();
+  };
+
+
+  
   return (
     <div>
        <section className="w-full px-8 text-gray-700 z-50 bg-white">
@@ -19,18 +44,29 @@ const Navbar = () => {
              
             </div>
             <div className="inline-flex items-center ml-5 space-x-6 lg:justify-end">
-            <NavLink
+            {isLoggedIn ? (
+              <button
+                className="text-base font-medium leading-6 text-white bg-red-500 p-2 m-1 rounded-lg whitespace-no-wrap transition duration-150 ease-in-out hover:text-red-900"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <NavLink
                   to="/login"
-                className="text-base font-medium leading-6 z-50 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
-              >
-                Sign in
-              </NavLink>
-              <NavLink
-                to="/register"
-                className="inline-flex z-50 items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-              >
-                Sign up
-              </NavLink>
+                  className="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                >
+                  Sign in
+                </NavLink>
+                <NavLink
+                  to="/register"
+                  className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                >
+                  Sign up
+                </NavLink>
+              </>
+            )}
             </div>
           </div>
         </section>

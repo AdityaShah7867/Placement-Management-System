@@ -9,34 +9,35 @@ import Register from "./Pages/Auth/Register";
 import Home from "./Pages/Home/Home";
 import Admin from "./Pages/Admin/Admin";
 import StudentDetail from "./Pages/Admin/StudentDetail";
+import Private from "./Components/Private/Private";
 
 const App = () => {
   return (
     <>
-    <Router>
-      <>
-        <Navbar />
+      <Router>
+        <>
+          <Navbar />
 
-        <ToastContainer />
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/studentdetail" element={<StudentDetail />} />
-          {/* PRIVATE ROUTES BELOW THIS */}
-          {/* <Route path="/" element={<Private />}>
-            <Route path="/editcustomer" element={<CustomerEdiit />} />
-          </Route> */}
+          <ToastContainer />
+          <Routes>
+            <Route path="/" element={<Landing />} />
 
-          
-        </Routes>
-     </>
-    </Router>
-  </>
-  )
-}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-export default App
+            {/* PRIVATE ROUTES BELOW THIS */}
+            <Route path="/" element={<Private />}>
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/studentdetail/:id" element={<StudentDetail />} />
+            </Route>
+
+            
+          </Routes>
+        </>
+      </Router>
+    </>
+  );
+};
+
+export default App;
