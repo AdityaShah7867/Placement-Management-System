@@ -101,10 +101,8 @@ export const getPlacementById = async (req, res) => {
 export const getPlacementBYBranch=async (req,res)=>{
     try {
         const user = await User.findById(req.userId);
-        console.log(user.Branch)
+        // console.log(user.Branch)
         const Branch=user.Branch;
-        // const placement = await Placement.find()
-        // console.log(placement)
         const placement = await Placement.find({Branch}) 
 
         if(!placement){
