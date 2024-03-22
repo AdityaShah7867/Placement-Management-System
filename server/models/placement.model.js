@@ -18,7 +18,11 @@ const placementSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         }
-    ]
+    ],
+    Branch:{
+        type: String,
+        default:""
+    }
 },{timestamps: true});
 
 const Placement = mongoose.model('Placement', placementSchema);
