@@ -33,21 +33,44 @@ export const getPlacementWithId = async (req, res) => {
     }
 }
 
-
 export const joinPlacement = async (req, res) => {
     try {
         const placementId = req.params.id;
         const userId = req.userId;
-        const placement = await Placement.findById(placementId);
+
+        const placement = await Placement.findById(placementId).populate('applicants');
+        const user = await User.findById(userId);
+
+        if(user.applications.includes(placementId)){
+            return res.status(400).send({
+                message:"Applied",
+                success:false
+            })
+        }
+
+        
+
         if (!placement) {
             return res.status(404).json({ message: "No placement found" });
         }
+
+        // Check if userId is already present in the applicants array
+        if (placement.applicants && placement.applicants.includes(userId)) {
+            return res.status(400).json({ message: "You have already applied for this placement" });
+        }
+
+        // If userId is not present, add it to the applicants array
         if (placement.applicants) {
             placement.applicants.push(userId);
         } else {
             placement.applicants = [userId];
         }
+
+        user.applications.push(placementId)
+         await user.save()
+
         await placement.save();
+
         res.status(200).json({
             message: "You have successfully applied for the placement",
             placement
@@ -56,11 +79,15 @@ export const joinPlacement = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: `Something went wrong: ${error.message}` });
     }
-}; 
+};
+
 
 export const getPlacementById = async (req, res) => {
+
     try {
+        
         const placement = await Placement.findById(req.params.id).populate('applicants');
+
         if (!placement) {
             return res.status(404).json({ message: "Placement not found" });
         }
@@ -78,7 +105,8 @@ export const getPlacementBYBranch=async (req,res)=>{
         const Branch=user.Branch;
         // const placement = await Placement.find()
         // console.log(placement)
-        const placement = await Placement.find({Branch})
+        const placement = await Placement.find({Branch}) 
+
         if(!placement){
             return res.status(400).send({message:"Placement for your branch is not available",success:false})
         }
