@@ -28,6 +28,19 @@ const userSchema = new mongoose.Schema({
             default:""
         }
     ],
+    year:{
+        type: String,
+        required: true
+    },
+    rollno:{
+        type: String,
+        required: true
+    },
+    resume: {
+        filename: String,
+        contentType: String,
+        data: Buffer
+    }
 
 },{timestamps: true});
 
