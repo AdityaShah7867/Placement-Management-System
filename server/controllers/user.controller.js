@@ -5,9 +5,11 @@ import jwt from "jsonwebtoken";
 export const registerController = async (req, res) => {
   try {
     const { name, email, password, Branch, year, rollno } = req.body;
-    // console.log(req.body)
-    // const file = req.file;
-    // console.log(file)
+    if (!req.file) {
+      return res.status(401).json("No file uploaded");
+    }
+
+    // console.log(req.file);
     if (!name || !email || !password || !Branch || !year || !rollno)
       return res
         .status(400)
@@ -25,11 +27,7 @@ export const registerController = async (req, res) => {
       Branch,
       year,
       rollno,
-      resume: {
-        filename: req.file.originalname,
-        contentType: req.file.mimetype,
-        data: req.file.buffer,
-      },
+      resume: req.file.filename,
     });
     res
       .status(201)
@@ -55,14 +53,12 @@ export const loginController = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "30d",
     });
-    res
-      .status(200)
-      .json({
-        user,
-        token,
-        success: true,
-        message: "User logged in successfully",
-      });
+    res.status(200).json({
+      user,
+      token,
+      success: true,
+      message: "User logged in successfully",
+    });
   } catch (error) {
     res.status(500).json({ message: error.message, success: false });
   }
@@ -79,7 +75,9 @@ export const getUserProfile = async (req, res) => {
     // Check if user is found
     if (!user) {
       console.log("User not found");
-      return res.status(400).json({ message: "User not found", success: false });
+      return res
+        .status(400)
+        .json({ message: "User not found", success: false });
     }
 
     // Log the populated user
@@ -91,5 +89,3 @@ export const getUserProfile = async (req, res) => {
     res.status(500).json({ message: error.message, success: false });
   }
 };
-
-

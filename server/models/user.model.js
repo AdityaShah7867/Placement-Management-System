@@ -38,9 +38,8 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     resume: {
-      filename: String,
-      contentType: String,
-      data: Buffer,
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }
