@@ -39,16 +39,15 @@ export const joinPlacement = async (req, res) => {
         const userId = req.userId;
 
         const placement = await Placement.findById(placementId).populate('applicants');
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).populate('applications');
+        console.log(user)
 
         if(user.applications.includes(placementId)){
             return res.status(400).send({
-                message:"Applied",
+                message:"Already Applied",
                 success:false
             })
         }
-
-        
 
         if (!placement) {
             return res.status(404).json({ message: "No placement found" });
@@ -66,14 +65,19 @@ export const joinPlacement = async (req, res) => {
             placement.applicants = [userId];
         }
 
-        user.applications.push(placementId)
-         await user.save()
+        if (user.applications) {
+            user.applications.push(userId);
+        } else {
+            user.applications = [userId];
+        }
+        await user.save()
 
         await placement.save();
 
         res.status(200).json({
             message: "You have successfully applied for the placement",
-            placement
+            placement,
+            user
         });
     } catch (error) {
         console.error(error);
@@ -82,7 +86,7 @@ export const joinPlacement = async (req, res) => {
 };
 
 
-export const getPlacementById = async (req, res) => {
+export const getApplicants = async (req, res) => {
 
     try {
         

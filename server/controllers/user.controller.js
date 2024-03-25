@@ -70,11 +70,22 @@ export const loginController = async (req, res) => {
 
 export const getUserProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.userId);
-    if (!user)
-      return res
-        .status(400)
-        .json({ message: "User not found", success: false });
+    // Check if req.userId is valid
+    console.log("User ID:", req.userId);
+
+    // Find the user by ID and populate the 'applications' field
+    const user = await User.findById(req.userId).populate("applications");
+
+    // Check if user is found
+    if (!user) {
+      console.log("User not found");
+      return res.status(400).json({ message: "User not found", success: false });
+    }
+
+    // Log the populated user
+    // console.log("Populated User:", user);
+
+    // Send the populated user in the response
     res.status(200).json({ user, success: true });
   } catch (error) {
     res.status(500).json({ message: error.message, success: false });
