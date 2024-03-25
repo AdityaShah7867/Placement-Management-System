@@ -3,9 +3,9 @@ import User from "../models/user.model.js";
 
 export const createPlacement = async (req, res) => {
     try {
-        const {companyName, jobTitle, Date,Branch} = req.body;
+        const {companyName, jobTitle, Date,Branch,salary,type,criteria,info} = req.body;
         if(!companyName || !jobTitle || !Date) return res.status(400).json({ message: "Please fill all the fields",success: false})
-        const placement = await Placement.create({ companyName, jobTitle, Date,Branch });
+        const placement = await Placement.create({ companyName, jobTitle, Date,Branch,salary,type,criteria,info });
         return res.status(201).json({ placement,success: true,message: "Placement created successfully"});
     } catch (error) {
         console.log('error in createPlacement: ', error)
@@ -100,9 +100,7 @@ export const getPlacementById = async (req, res) => {
 
 export const getPlacementBYBranch=async (req,res)=>{
     try {
-        const user = await User.findById(req.userId);
-        // console.log(user.Branch)
-        const Branch=user.Branch;
+        const {Branch} = req.params;
         const placement = await Placement.find({Branch}) 
 
         if(!placement){
@@ -114,3 +112,4 @@ export const getPlacementBYBranch=async (req,res)=>{
         res.status(500).json({ message: `Something went wrong: ${error.message}` });
     }
 }
+

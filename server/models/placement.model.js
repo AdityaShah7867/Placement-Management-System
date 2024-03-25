@@ -22,6 +22,23 @@ const placementSchema = new mongoose.Schema({
     Branch:{
         type: String,
         default:""
+    },
+    salary:{
+        type: String,
+        default:""
+    },
+    type:{
+        type: String,
+        default:""
+    
+    },
+    criteria:{
+        type: String,
+        default:""
+    },
+    info:{
+        type: String,
+        default:""
     }
 },{timestamps: true});
 
