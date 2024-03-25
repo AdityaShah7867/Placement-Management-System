@@ -12,6 +12,6 @@ router.post('/join-placement/:id',isLogedIn,joinPlacement)
 
 router.get('/get-applicants/:id',isLogedIn,isAdmin,getApplicants)
 
-router.get('/get-placemnt-branch',isLogedIn,getPlacementBYBranch)
+router.get('/get-placemnt-branch/:Branch',isLogedIn,getPlacementBYBranch)
 
 export default router;
