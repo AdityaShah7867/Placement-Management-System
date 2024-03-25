@@ -66,9 +66,9 @@ export const joinPlacement = async (req, res) => {
         }
 
         if (user.applications) {
-            user.applications.push(userId);
+            user.applications.push(placementId);
         } else {
-            user.applications = [userId];
+            user.applications = [placementId];
         }
         await user.save()
 
