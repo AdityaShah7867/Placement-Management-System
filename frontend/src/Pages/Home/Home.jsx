@@ -4,17 +4,17 @@ import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [placements, setPlacements] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredPlacements, setFilteredPlacements] = useState([]);
+  const [branchFilter, setBranchFilter] = useState('All');
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem('user'));
   const navigate = useNavigate();
 
-
-
   useEffect(() => {
     const fetchPlacements = async () => {
       try {
-        
-        const response = await fetch('http://localhost:8010/api/placement/get-placemnt-branch', {
+        const response = await fetch('http://localhost:8010/api/placement/get-placements', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -23,7 +23,8 @@ const Home = () => {
         });
         const data = await response.json();
         if (data.success) {
-          setPlacements(data.placement);
+          setPlacements(data.placements);
+          setFilteredPlacements(data.placements);
         } else {
           console.error('Failed to fetch placements');
         }
@@ -33,20 +34,55 @@ const Home = () => {
     };
 
     fetchPlacements();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (user && user.isAdmin) {
       navigate('/admin');
     }
-  }, [user, navigate])
+  }, [user, navigate]);
+
+  useEffect(() => {
+    const filtered = placements.filter(placement => {
+      if (branchFilter === 'All') {
+        return placement.companyName.toLowerCase().includes(searchTerm.toLowerCase());
+      } else {
+        return placement.companyName.toLowerCase().includes(searchTerm.toLowerCase()) && placement.Branch === branchFilter;
+      }
+    });
+    setFilteredPlacements(filtered);
+  }, [searchTerm, branchFilter, placements]);
+
+  const handleBranchFilterChange = event => {
+    setBranchFilter(event.target.value);
+  };
 
   return (
     <div className='m-4 p-4 min-h-screen bg-gray-50'>
       <br />
-      <h1 className='text-black text-2xl font-semibold p-4 mb-8 ml-8'> Ongoing Placement Drives !</h1>
+      <h1 className='text-black text-3xl justify-center items-center flex font-semibold p-4 mb-8 ml-8'> Ongoing Placement Drives !</h1>
+      <div className='flex justify-between items-center mb-8'>
+  <input
+    type='text'
+    placeholder='Search by company name'
+    value={searchTerm}
+    onChange={event => setSearchTerm(event.target.value)}
+    className='p-2 border w-full border-gray-300 rounded-md mr-4'
+  />
+  <select
+    value={branchFilter}
+    onChange={handleBranchFilterChange}
+    className='p-2 border border-gray-300 rounded-md'
+  >
+    <option value='All'>All Branches</option>
+    <option value='IT'>IT</option>
+    <option value='COMPS'>COMPS</option>
+    {/* Add more options if needed */}
+  </select>
+</div>
+
       <div className='flex flex-wrap justify-center items-center gap-6'>
-        {placements.map(placement => (
+        {filteredPlacements.map(placement => (
           <PlacementCard key={placement._id} placement={placement} authToken={token} />
         ))}
       </div>

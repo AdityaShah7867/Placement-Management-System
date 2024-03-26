@@ -37,7 +37,7 @@ const Navbar = () => {
                 className="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0"
               >
                 <span className="mx-auto text-xl font-black leading-none text-gray-900 select-none">
-                  AI<span className="text-indigo-600">.</span>
+                  YOUR LOGO HERE<span className="text-indigo-600">.</span>
                 </span>
               </NavLink>
 
