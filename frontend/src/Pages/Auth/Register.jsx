@@ -75,7 +75,12 @@ const Register = () => {
                     Select Branch
                   </option>
                   <option value="IT">IT</option>
-                  <option value="COMPS">Computer Science</option>
+                  <option value="COMPS">Computer</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Electrical">Electrical</option>
+                  <option value="Mechanical">Mechanical</option>
+                  <option value="Civil">Civil</option>
+                  <option value="EXTC">EXTC</option>
                   {/* Add more options as needed */}
                 </select>
 

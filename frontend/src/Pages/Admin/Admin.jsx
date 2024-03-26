@@ -8,6 +8,10 @@ const Admin = () => {
   const [jobTitle, setJobTitle] = useState("");
   const [date, setDate] = useState("");
   const [branch, setBranch] = useState("");
+  const [salary, setSalary] = useState("");
+  const [type, setType] = useState("");
+  const [criteria, setCriteria] = useState("");
+  const [info, setInfo] = useState("");
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -66,6 +70,10 @@ const Admin = () => {
             jobTitle,
             Date: date,
             Branch: branch,
+            salary,
+            type,
+            criteria,
+            info,
           }),
         }
       );
@@ -143,7 +151,7 @@ const Admin = () => {
                         htmlFor="date"
                         className="block text-lg font-semibold mb-2"
                       >
-                        Date
+                        End Date
                       </label>
                       <input
                         type="date"
@@ -172,6 +180,78 @@ const Admin = () => {
                       />
                     </div>
 
+                    <div className="mb-4">
+                      <label
+                        htmlFor='salary'
+                        className="block text-lg font-semibold mb-2"
+                      >
+                        Salary
+                      </label>
+                      <input
+                        type="text"
+                        id="salary"
+                        name="salary"
+                        placeholder="Enter Salary"
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                        value={salary}
+                        onChange={(e) => setSalary(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="mb-4">
+                      <label
+                        htmlFor="type"
+                        className="block text-lg font-semibold mb-2"
+                      >
+                        Type
+                      </label>
+                      <input
+                        type="text"
+                        id="type"
+                        name="type"
+                        placeholder="Enter Type"
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                        value={type}
+                        onChange={(e) => setType(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="mb-4">
+                      <label
+                        htmlFor="criteria"
+                        className="block text-lg font-semibold mb-2"
+                      >
+                        Criteria
+                      </label>
+                      <input
+                        type="text"
+                        id="criteria"
+                        name="criteria"
+                        placeholder="Enter criteria"
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                        value={criteria}
+                        onChange={(e) => setCriteria(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="mb-4">
+                      <label
+                        htmlFor="info"
+                        className="block text-lg font-semibold mb-2"
+                      >
+                        Information
+                      </label>
+                      <input
+                        type="text"
+                        id="info"
+                        name="info"
+                        placeholder="Enter Information"
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                        value={info}
+                        onChange={(e) => setInfo(e.target.value)}
+                      />
+                    </div>
+
                     <select
                       className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                       value={branch}
@@ -181,7 +261,12 @@ const Admin = () => {
                         Select Branch
                       </option>
                       <option value="IT">IT</option>
-                      <option value="COMPS">Computer Science</option>
+                      <option value="COMPS">Computer</option>
+                      <option value="Electronics">Electronics</option>
+                      <option value="Electrical">Electrical</option>
+                      <option value="Mechanical">Mechanical</option>
+                      <option value="Civil">Civil</option>
+                      <option value="EXTC">EXTC</option>
                       {/* Add more options as needed */}
                     </select>
 

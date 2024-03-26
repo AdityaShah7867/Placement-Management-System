@@ -60,7 +60,7 @@ const PlacementCard = ({ placement, authToken }) => {
         <div className="mt-1 text-xl">
           <BsCalendar2Date />
         </div>
-        <div>Starts On: {placement.Date}</div>
+        <div>Ends On: {placement.Date}</div>
       </div>
       <div className="mt-2">
         <p>Banch: {placement.Branch}</p>
