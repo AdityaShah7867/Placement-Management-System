@@ -45,21 +45,25 @@ const Navbar = () => {
             </div>
             <div className="inline-flex items-center ml-5 space-x-6 lg:justify-end">
 
-            <NavLink
-                to="/profile"
-                className="flex text-right mb-5 font-medium border-2 rounded-md p-2 bg-blue-400 text-white lg:w-auto lg:items-center lg:justify-center md:mb-0"
-              >
-               PROFILE
-              </NavLink>
+           
 
 
             {isLoggedIn ? (
+              <div>
+               <NavLink
+               to="/profile"
+               className="flex text-right mb-5 font-medium border-2 rounded-md p-2 bg-blue-400 text-white lg:w-auto lg:items-center lg:justify-center md:mb-0"
+             >
+              PROFILE
+             </NavLink>
+
               <button
                 className="text-base font-medium leading-6 text-white bg-red-500 p-2 m-1 rounded-lg whitespace-no-wrap transition duration-150 ease-in-out hover:text-red-900"
                 onClick={handleLogout}
               >
                 Logout
               </button>
+              </div>
             ) : (
               <>
                 <NavLink
