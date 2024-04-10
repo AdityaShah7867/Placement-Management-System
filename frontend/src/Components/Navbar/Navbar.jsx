@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
-
+import Logo from "../../Assets/Images/Logo.png";
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -36,14 +36,23 @@ const Navbar = () => {
                 to="/"
                 className="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0"
               >
-                <span className="mx-auto text-xl font-black leading-none text-gray-900 select-none">
-                  YOUR LOGO HERE<span className="text-indigo-600">.</span>
-                </span>
+               <img src={Logo} alt="" className='w-16 h-16'/>
               </NavLink>
+
+              
 
              
             </div>
             <div className="inline-flex items-center ml-5 space-x-6 lg:justify-end">
+
+            <NavLink
+                to="/profile"
+                className="flex text-right mb-5 font-medium border-2 rounded-md p-2 bg-blue-400 text-white lg:w-auto lg:items-center lg:justify-center md:mb-0"
+              >
+               PROFILE
+              </NavLink>
+
+
             {isLoggedIn ? (
               <button
                 className="text-base font-medium leading-6 text-white bg-red-500 p-2 m-1 rounded-lg whitespace-no-wrap transition duration-150 ease-in-out hover:text-red-900"
