@@ -95,7 +95,7 @@ const Profile = () => {
                           required
                         />
                       </div>
-                      <h1 className="text-2xl mt-12">RESUME HERE</h1>
+                      
                       
                     </>
                   )}
@@ -105,6 +105,7 @@ const Profile = () => {
 
             <div>
             <div className="mt-2">
+            <h1 className="text-2xl mt-12">RESUME HERE</h1>
                       <iframe
                         src={`http://localhost:8010/uploads/${userData?.resume}`}
                         className="h-96"
