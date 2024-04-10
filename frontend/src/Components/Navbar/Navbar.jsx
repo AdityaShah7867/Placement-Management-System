@@ -49,11 +49,11 @@ const Navbar = () => {
 
 
             {isLoggedIn ? (
-              <div className='flex'>
-              <div>
+              <div className='flex justify-between gap-8'>
+              <div className='mt-3'>
                <NavLink
                to="/profile"
-               className="flex flex-wrap text-right mb-5 font-medium border-2 rounded-md p-2 bg-blue-400 text-white lg:w-auto lg:items-center lg:justify-center md:mb-0"
+               className="text-base font-medium leading-6 text-white bg-blue-500 mt-4 p-2 m-1 rounded-lg "
              >
               PROFILE
              </NavLink>
