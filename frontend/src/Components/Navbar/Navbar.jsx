@@ -29,7 +29,7 @@ const Navbar = () => {
   return (
     <div>
        <section className="w-full px-8 text-gray-700 z-50 bg-white">
-          <div className="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl z-50">
+          <div className="container flex flex-col flex-wrap items-center justify-between mx-auto md:flex-row max-w-7xl z-50">
             <div className="relative flex flex-col md:flex-row">
               
               <NavLink
@@ -43,8 +43,8 @@ const Navbar = () => {
               <>
               
               <NavLink
-                  to="/register"
-                  className="p-2 mt-2 bg-blue-400 text-white  border-2 ml-8 rounded-md"
+                  to="/home"
+                  className="text-base font-medium leading-6 text-white bg-blue-500 mt-4  m-1 rounded-lg ml-12 mb-2 p-2"
                 >
                  Home
                 </NavLink>
