@@ -39,6 +39,24 @@ const Navbar = () => {
                <img src={Logo} alt="" className='w-16 h-16'/>
               </NavLink>
 
+              {isLoggedIn ? (
+              <>
+              
+              <NavLink
+                  to="/register"
+                  className="p-2 mt-2 bg-blue-400 text-white  border-2 ml-8 rounded-md"
+                >
+                 Home
+                </NavLink>
+                
+                </>
+            ) : (
+              <>
+               
+                
+              </>
+            )}
+
               
 
              
@@ -49,6 +67,8 @@ const Navbar = () => {
 
 
             {isLoggedIn ? (
+              <div>
+             
               <div className='flex justify-between gap-8'>
               <div className='mt-3'>
                <NavLink
@@ -65,6 +85,7 @@ const Navbar = () => {
               >
                 Logout
               </button>
+              </div>
               </div>
               </div>
             ) : (
