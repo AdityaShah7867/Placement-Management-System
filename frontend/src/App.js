@@ -10,7 +10,7 @@ import Home from "./Pages/Home/Home";
 import Admin from "./Pages/Admin/Admin";
 import StudentDetail from "./Pages/Admin/StudentDetail";
 import Private from "./Components/Private/Private";
-
+import Profile from "./Pages/Profile/Profile";
 const App = () => {
   return (
     <>
@@ -24,6 +24,7 @@ const App = () => {
 
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
 
             {/* PRIVATE ROUTES BELOW THIS */}
             <Route path="/" element={<Private />}>
