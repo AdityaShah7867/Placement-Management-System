@@ -28,6 +28,9 @@ const Profile = () => {
       <div className="bg-white w-full flex justify-center items-center flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931]">
         <main className="w-full min-h-screen py-1 md:w-2/3 lg:w-3/4">
           <div className="p-2 md:p-4">
+
+            <div className='flex  w-full'>
+            
             <div className="w-full px-6 pb-8 mt-8 sm:max-w-xl sm:rounded-lg">
               <h2 className="pl-6 text-2xl font-bold sm:text-3xl ">Profile</h2>
               <div className="grid max-w-2xl mx-auto ">
@@ -93,17 +96,25 @@ const Profile = () => {
                         />
                       </div>
                       <h1 className="text-2xl mt-12">RESUME HERE</h1>
-                      <div className="mt-2">
-                      <iframe
-                        src={`http://localhost:8010/uploads/${userData?.resume}`}
-                        className="w-full h-96"
-                        title="Resume"
-                      ></iframe>
-                    </div>
+                      
                     </>
                   )}
                 </div>
               </div>
+            </div>
+
+            <div>
+            <div className="mt-2">
+                      <iframe
+                        src={`http://localhost:8010/uploads/${userData?.resume}`}
+                        className="h-96"
+                        title="Resume"
+                        style={{width: '250%'}}
+                      ></iframe>
+                    </div>
+            </div>
+
+
             </div>
           </div>
         </main>
