@@ -10,6 +10,7 @@ import Admin from "./Pages/Admin/Admin";
 import StudentDetail from "./Pages/Admin/StudentDetail";
 import Private from "./Components/Private/Private";
 import Profile from "./Pages/Profile/Profile";
+import AdminReg from "./Pages/Auth/AdminReg";
 const App = () => {
   return (
     <>
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/adminreg" element={<AdminReg />} />
 
             {/* PRIVATE ROUTES BELOW THIS */}
             <Route path="/" element={<Private />}>
