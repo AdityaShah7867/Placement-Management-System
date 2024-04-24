@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 export const registerController = async (req, res) => {
   try {
     const { name, email, password, Branch, year, rollno } = req.body;
+
     if (!req.file) {
       return res.status(401).json("No file uploaded");
     }
@@ -40,6 +41,7 @@ export const registerController = async (req, res) => {
 export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
+    
     const user = await User.findOne({ email });
     if (!user)
       return res
@@ -94,7 +96,8 @@ export const getUserProfile = async (req, res) => {
 export const adminSignup= async(req,res)=>{
   try {
     const {email,Branch,name,password}=req.body;
-    if(!email || !branch || !name || !password){
+    console.log(req.body)
+    if(!email || !Branch || !name || !password){
       return res.status(400).json({message:"Please fill all the fields",success:false});
     }
     const existinguser = await User.findOne({ email });
@@ -103,6 +106,7 @@ export const adminSignup= async(req,res)=>{
         .status(400)
         .json({ message: "User already exists", success: false });
     }
+    // console.log(existinguser)/
     const isAdmin=true;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
