@@ -93,7 +93,7 @@ export const getUserProfile = async (req, res) => {
 
 export const adminSignup= async(req,res)=>{
   try {
-    const {email,branch,name,password}=req.body;
+    const {email,Branch,name,password}=req.body;
     if(!email || !branch || !name || !password){
       return res.status(400).json({message:"Please fill all the fields",success:false});
     }
@@ -109,7 +109,7 @@ export const adminSignup= async(req,res)=>{
       name,
       email,
       password: hashedPassword,
-      Branch:branch,
+      Branch,
       isAdmin
     });
     return res.status(201).json({user,success:true,message:"Admin created successfully"});
