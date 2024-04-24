@@ -117,3 +117,16 @@ export const getPlacementBYBranch=async (req,res)=>{
     }
 }
 
+export const csvDownload = async (req, res) => {
+    try {
+        const placements = await Placement.find().populate('applicants');
+        const fields = ['companyName', 'jobTitle', 'Date','applicants', 'Branch', 'salary', 'type', 'criteria', 'info'];
+        const json2csvParser = new Parser({ fields });
+        const csv = json2csvParser.parse(placements);
+        res.attachment('placements.csv');
+        res.status(200).send(csv);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: `Something went wrong: ${error.message}` });
+    }
+}
