@@ -89,3 +89,31 @@ export const getUserProfile = async (req, res) => {
     res.status(500).json({ message: error.message, success: false });
   }
 };
+
+
+export const adminSignup= async(req,res)=>{
+  try {
+    const {email,branch,name,password}=req.body;
+    if(!email || !branch || !name || !password){
+      return res.status(400).json({message:"Please fill all the fields",success:false});
+    }
+    const existinguser = await User.findOne({ email });
+    if (existinguser){
+      return res
+        .status(400)
+        .json({ message: "User already exists", success: false });
+    }
+    const isAdmin=true;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      Branch:branch,
+      isAdmin
+    });
+    return res.status(201).json({user,success:true,message:"Admin created successfully"});
+  } catch (error) {
+    return res.status(500).json({ message: error.message,success: false});
+  }
+}

@@ -31,15 +31,12 @@ const userSchema = new mongoose.Schema(
     ],
     year: {
       type: String,
-      required: true,
     },
     rollno: {
       type: String,
-      required: true,
     },
     resume: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true }
