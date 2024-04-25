@@ -1,5 +1,7 @@
 import Placement from "../models/placement.model.js";
 import User from "../models/user.model.js";
+import { Parser } from 'json2csv';
+
 
 export const createPlacement = async (req, res) => {
     try {
@@ -117,12 +119,52 @@ export const getPlacementBYBranch=async (req,res)=>{
     }
 }
 
+
+
+
+
+
+
+
+
 export const csvDownload = async (req, res) => {
     try {
-        const placements = await Placement.find().populate('applicants');
-        const fields = ['companyName', 'jobTitle', 'Date','applicants', 'Branch', 'salary', 'type', 'criteria', 'info'];
+        // Retrieve placements from the database, populating the 'applicants' field with user data
+        const placements = await Placement.find().populate({
+            path: 'applicants',
+            select: 'name email Branch year rollno', // Select specific fields from the user model
+        });
+
+        // Define fields for CSV file
+        const fields = [
+            { label: 'Company Name', value: 'companyName' },
+            { label: 'Job Title', value: 'jobTitle' },
+            { label: 'Date', value: 'Date' },
+            ...placements.reduce((acc, placement) => {
+                const numApplicants = placement.applicants.length;
+                for (let i = 0; i < numApplicants; i++) {
+                    acc.push(
+                        { label: `Applicant ${i + 1} Name`, value: row => row.applicants[i] ? row.applicants[i].name : '' },
+                        { label: `Applicant ${i + 1} Email`, value: row => row.applicants[i] ? row.applicants[i].email : '' },
+                        { label: `Applicant ${i + 1} Branch`, value: row => row.applicants[i] ? row.applicants[i].Branch : '' },
+                        { label: `Applicant ${i + 1} Year`, value: row => row.applicants[i] ? row.applicants[i].year : '' },
+                        { label: `Applicant ${i + 1} Roll No`, value: row => row.applicants[i] ? row.applicants[i].rollno : '' }
+                    );
+                }
+                return acc;
+            }, []),
+            { label: 'Branch', value: 'Branch' },
+            { label: 'Salary', value: 'salary' },
+            { label: 'Type', value: 'type' },
+            { label: 'Criteria', value: 'criteria' },
+            { label: 'Info', value: 'info' }
+        ];
+
+        // Use json2csvParser to parse the data into CSV format
         const json2csvParser = new Parser({ fields });
         const csv = json2csvParser.parse(placements);
+
+        // Set response headers and send CSV as response
         res.attachment('placements.csv');
         res.status(200).send(csv);
     } catch (error) {

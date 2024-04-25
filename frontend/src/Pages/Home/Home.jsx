@@ -60,6 +60,7 @@ const Home = () => {
         );
       }
     });
+    
     setFilteredPlacements(filtered);
   }, [searchTerm, branchFilter, placements]);
 
