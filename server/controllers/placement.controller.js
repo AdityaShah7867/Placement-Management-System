@@ -140,19 +140,11 @@ export const csvDownload = async (req, res) => {
             { label: 'Company Name', value: 'companyName' },
             { label: 'Job Title', value: 'jobTitle' },
             { label: 'Date', value: 'Date' },
-            ...placements.reduce((acc, placement) => {
-                const numApplicants = placement.applicants.length;
-                for (let i = 0; i < numApplicants; i++) {
-                    acc.push(
-                        { label: `Applicant ${i + 1} Name`, value: row => row.applicants[i] ? row.applicants[i].name : '' },
-                        { label: `Applicant ${i + 1} Email`, value: row => row.applicants[i] ? row.applicants[i].email : '' },
-                        { label: `Applicant ${i + 1} Branch`, value: row => row.applicants[i] ? row.applicants[i].Branch : '' },
-                        { label: `Applicant ${i + 1} Year`, value: row => row.applicants[i] ? row.applicants[i].year : '' },
-                        { label: `Applicant ${i + 1} Roll No`, value: row => row.applicants[i] ? row.applicants[i].rollno : '' }
-                    );
-                }
-                return acc;
-            }, []),
+            { label: 'Applicant Name', value: row => row.applicants.map(applicant => applicant.name).join(', ') },
+            { label: 'Applicant Email', value: row => row.applicants.map(applicant => applicant.email).join(', ') },
+            { label: 'Applicant Branch', value: row => row.applicants.map(applicant => applicant.Branch).join(', ') },
+            { label: 'Applicant Year', value: row => row.applicants.map(applicant => applicant.year).join(', ') },
+            { label: 'Applicant Roll No', value: row => row.applicants.map(applicant => applicant.rollno).join(', ') },
             { label: 'Branch', value: 'Branch' },
             { label: 'Salary', value: 'salary' },
             { label: 'Type', value: 'type' },
