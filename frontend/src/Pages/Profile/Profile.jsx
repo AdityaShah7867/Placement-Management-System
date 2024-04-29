@@ -81,20 +81,23 @@ const Profile = () => {
                             required
                           />
                         </div>
-                        <div className="mb-2 sm:mb-6">
-                          <label htmlFor="profession" className="block mb-2 text-sm font-medium text-indigo-900 ">
-                            Roll no
-                          </label>
-                          <input
-                            type="text"
-                            id="profession"
-                            className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
-                            placeholder="Branch"
-                            defaultValue={userData.rollno}
-                            disabled
-                            required
-                          />
-                        </div>
+                        {/* Conditionally render roll number if user is not an admin */}
+                        {!isAdmin && (
+                          <div className="mb-2 sm:mb-6">
+                            <label htmlFor="roll_no" className="block mb-2 text-sm font-medium text-indigo-900 ">
+                              Roll no
+                            </label>
+                            <input
+                              type="text"
+                              id="roll_no"
+                              className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 "
+                              placeholder="Roll no"
+                              defaultValue={userData.rollno}
+                              disabled
+                              required
+                            />
+                          </div>
+                        )}
                       </>
                     )}
                   </div>

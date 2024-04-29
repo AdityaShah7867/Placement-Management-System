@@ -149,7 +149,7 @@ export const csvDownload = async (req, res) => {
             { label: 'Salary', value: 'salary' },
             { label: 'Type', value: 'type' },
             { label: 'Criteria', value: 'criteria' },
-            { label: 'Info', value: 'info' }
+            { label: 'InfPo', value: 'info' }
         ];
 
         // Use json2csvParser to parse the data into CSV format
